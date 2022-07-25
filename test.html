@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // CORS test
+      const test = () => {
+        const myToken = "";
+        axios
+          .get("https://flight-project.azurewebsites.net/")
+          .then(function (response) {
+            // handle success
+            console.log(response);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+          .then(function () {
+            console.log("ok");
+          });
+      };
+ 
+      const login = async () => {
+        let token = await fetch("https://flight-project.azurewebsites.net/token/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username:user.value,
+            password: pwd.value,
+          }),
+        });
+        let theToken = await token.json();
+        localStorage.setItem("token", JSON.stringify(theToken));
+      };
+ 
+      const getCustomers = async () => {
+        let aTok = JSON.parse(localStorage.getItem("token")).access;
+        // console.log(String(aTok));
+        let response = await fetch("https://flight-project.azurewebsites.net/customers", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(aTok),
+          },
+        });
+        let data = await response.json();
+ 
+        if (response.status === 200) {
+          console.log(data);
+          console.log("get data");
+        } else if (response.statusText === "Unauthorized") {
+          console.log("user not logged");
+        }
+      };
+      const addCustomer = async () => {
+        let aTok = JSON.parse(localStorage.getItem("token")).access;
+        console.log(String(aTok));
+        let response = await fetch("https://flight-project.azurewebsites.net/addflight", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(aTok),
+          },
+          body: JSON.stringify({
+            airline_Companie_id: airline_Companie.value,
+            origin_countrie_id: origin_countrie.value,
+            destination_countrie_id: destination_countrie.value,
+            departure_time: departure_time.value,
+            landing_time: landing_time.value,
+            remaining_tickets: remaining_tickets.value,
+          }),
+        });
+        let data = await response.json();
+ 
+        if (response.status === 200) {
+          console.log(data);
+          console.log("get data");
+        } else if (response.statusText === "Unauthorized") {
+          console.log("logoutUser();");
+        }
+      };
+
+      const deleteCustomer = async () => {
+        let aTok = JSON.parse(localStorage.getItem("token")).access;
+        // console.log(String(aTok));
+        let response = await fetch("https://flight-project.azurewebsites.net/customers/-1", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(aTok),
+          },
+        });
+        let data = await response.json();
+ 
+        if (response.status === 200) {
+          console.log(data);
+          console.log("get data");
+        } else if (response.statusText === "Unauthorized") {
+          console.log("user not logged");
+        }
+      };
+    </script>
+    User Name:<input id="user" />
+    Pwd:<input id="pwd"  type="password"/>
+    <button onclick="login()">login</button>
+    <hr>
+    <button onclick="test()">test</button>
+    <button onclick="getCustomers()">Customers</button>
+   
+    <button onclick="addCustomer()">addCustomer</button> <br />
+    airline_Companie: <input id="airline_Companie" /> <br />
+    origin_countrie: <input id="origin_countrie" /><br />
+    destination_countrie: <input id="destination_countrie" /><br />
+    departure_time: <input type="date" id="departure_time" /><br />
+    landing_time: <input type="date" id="landing_time" /><br />
+    remaining_tickets: <input id="remaining_tickets" /><br />
+    <hr>
+    id to delete Customer: <input id="del_id" /> <br />
+    <button onclick="deleteCustomer()">delete Customer</button> <br />
+    <hr>
+ 
+
+</html>
