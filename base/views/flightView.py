@@ -29,15 +29,11 @@ class MyTokenObtainPairView(TokenObtainPairView):
  
  
  
-@api_view(['GET','DELETE'])
+@api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def getFlight(request,id=-1):
     user = request.user
     print(user,"innnn")
-    if request.method == 'DELETE': #method delete a row
-        temp= Flight.objects.get(_id = id)
-        temp.delete()
-        return JsonResponse({'DELETE': id})
     if int(id) > -1: #get single product
         return JsonResponse(FlightSerializer().get_Flight_By_Id(id),safe=False)
     else: # return all
@@ -59,3 +55,29 @@ def addFlight(request):
     print(user)
     return JsonResponse({'POST':"success"})
 
+ 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteFlight(request,id=-1):
+    user = request.user
+    print(user,"innnn")
+    temp= Flight.objects.get(_id = id)
+    temp.delete()
+    return JsonResponse({'DELETE': id})
+
+@api_view(['GET'])
+def get_filght_by_filters(request,origin_countrie_id=-1,destination_countrie_id=-1,fromTime="",toTime=""):
+    res=[]
+    selectedFlight = Flight.objects.all()
+    if int(origin_countrie_id) > -1 :
+        origin_countrie = Countrie.objects.get(origin_countrie_id=origin_countrie_id)
+        selectedFlight = selectedFlight .filter(origin_countrie=origin_countrie)
+    if int(destination_countrie_id) > -1 :
+        destination_countrie = Countrie.objects.get(destination_countrie_id=destination_countrie_id)
+        selectedFlight = selectedFlight .filter(destination_countrie=destination_countrie)
+    if fromTime != "" and toTime != "":
+        selectedFlight = selectedFlight.filter(date__range=[fromTime,toTime])
+    selectedFlight = selectedFlight.filter(available = 'yes')
+    for flight in selectedFlight:
+        res.append(FlightSerializer().get_Flight(flight))
+    return JsonResponse(res,safe =False)

@@ -41,7 +41,7 @@ def addUser(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def logout_view(request):
-    print(request.user)
+    print(request.user, "logged out")
     logout(request) 
     return JsonResponse("user Logout",safe=False)
 

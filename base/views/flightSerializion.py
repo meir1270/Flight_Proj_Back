@@ -17,6 +17,7 @@ class FlightSerializer(ModelSerializer):
             "departure_time": obj.departure_time,
             "landing_time": obj.landing_time,
             "remaining_tickets": obj.remaining_tickets,
+            "status": obj.status, 
             }
 
 
@@ -37,5 +38,8 @@ class FlightSerializer(ModelSerializer):
             "departure_time": flight.departure_time,
             "landing_time": flight.landing_time,
             "remaining_tickets": flight.remaining_tickets,
+            "status": flight.status,
             }
+
+
 

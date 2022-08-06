@@ -11,6 +11,7 @@ class CountrieSerializer(ModelSerializer):
         return {
             "id": obj._id,
             "name": str(obj.name),
+            "image": str(obj.image),
             }
 
     def get_All_Countrie(self):
@@ -25,5 +26,7 @@ class CountrieSerializer(ModelSerializer):
         return {
             "id": countrie._id,
             "name": str(countrie.name),
+            "image": str(countrie.image),
+
  }
 

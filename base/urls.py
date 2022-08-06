@@ -34,6 +34,8 @@ urlpatterns = [
     path('flight', flightView.getFlight),
     path('flight/<id>', flightView.getFlight),
     path('addflight', flightView.addFlight),
+    path('deleteflight/<id>', flightView.deleteFlight),
+    path('selectflight/<origin_countrie_id>/<destination_countrie_id>/<fromTime>/<toTime>', flightView.get_filght_by_filters),
     # Tickets urls:
     path('tickets', ticketsView.getTickets),
     path('usertickets', ticketsView.getTicketsForUSER),
