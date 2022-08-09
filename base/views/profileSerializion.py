@@ -23,7 +23,7 @@ class ProfileSerializer(ModelSerializer):
         return res
 
 
-    def get_Customer_By_Id(self,id):
+    def get_UserProfile_By_Id(self,id):
         profile= UserProfile.objects.get(_id = id)
         return {
             "id": profile._id,

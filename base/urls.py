@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import customerView, adminstratorView,countrieView,airline_CompanieView,flightView,ticketsView
+from .views import customerView, adminstratorView,countrieView,airline_CompanieView,flightView,ticketsView,profileView
 from .views.customerView import MyTokenObtainPairView
 from .views.adminstratorView import MyTokenObtainPairView
 from .views.countrieView import MyTokenObtainPairView
@@ -35,7 +35,7 @@ urlpatterns = [
     path('flight/<id>', flightView.getFlight),
     path('addflight', flightView.addFlight),
     path('deleteflight/<id>', flightView.deleteFlight),
-    path('selectflight/<origin_countrie_id>/<destination_countrie_id>/<fromTime>/<toTime>', flightView.get_filght_by_filters),
+    path('selectflight/<origin_countrie>/<destination_countrie>/<departure_time>/<landing_time>', flightView.get_filght_by_filters),
     # Tickets urls:
     path('tickets', ticketsView.getTickets),
     path('usertickets', ticketsView.getTicketsForUSER),
@@ -50,6 +50,9 @@ urlpatterns = [
     path('adduser', customerView.addUser),
     # Logout
     path('logout', customerView.logout_view),
+    # Users url:
+    path('users', profileView.getUserProfile),
+    path('users/<id>', profileView.getUserProfile),
 ]
 
 

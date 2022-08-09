@@ -6,9 +6,10 @@ from rest_framework.permissions import IsAuthenticated
  
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
- 
+from datetime import datetime
 from base.views.airline_CompanieSerializion  import Airline_CompanieSerializer
 from base.models import Airline_Companie, Countrie,Flight
+from base.views.countrieSerializion import CountrieSerializer
 from base.views.flightSerializion import FlightSerializer
  
  
@@ -66,18 +67,20 @@ def deleteFlight(request,id=-1):
     return JsonResponse({'DELETE': id})
 
 @api_view(['GET'])
-def get_filght_by_filters(request,origin_countrie_id=-1,destination_countrie_id=-1,fromTime="",toTime=""):
+def get_filght_by_filters(request,origin_countrie=-1,destination_countrie=-1,departure_time="",landing_time=""):
+    departure_time_obj = datetime.strptime(departure_time, '%Y-%m-%d')
+    landing_time_obj = datetime.strptime(landing_time, '%Y-%m-%d')
     res=[]
     selectedFlight = Flight.objects.all()
-    if int(origin_countrie_id) > -1 :
-        origin_countrie = Countrie.objects.get(origin_countrie_id=origin_countrie_id)
-        selectedFlight = selectedFlight .filter(origin_countrie=origin_countrie)
-    if int(destination_countrie_id) > -1 :
-        destination_countrie = Countrie.objects.get(destination_countrie_id=destination_countrie_id)
-        selectedFlight = selectedFlight .filter(destination_countrie=destination_countrie)
-    if fromTime != "" and toTime != "":
-        selectedFlight = selectedFlight.filter(date__range=[fromTime,toTime])
-    selectedFlight = selectedFlight.filter(available = 'yes')
+    if int(origin_countrie) > -1 :
+        origin_countrie_id = CountrieSerializer().get_Countrie_By_Id(origin_countrie)["id"]
+        selectedFlight = selectedFlight .filter(origin_countrie_id=origin_countrie_id)
+    if int(destination_countrie) > -1 :
+        destination_countrie_id = CountrieSerializer().get_Countrie_By_Id(destination_countrie)["id"]
+        selectedFlight = selectedFlight .filter(destination_countrie_id=destination_countrie_id)
+    if departure_time_obj != "" and landing_time_obj != "":
+        selectedFlight = selectedFlight.filter(departure_time__range=[departure_time_obj,landing_time_obj])
+    selectedFlight = selectedFlight.filter(status = True)
     for flight in selectedFlight:
         res.append(FlightSerializer().get_Flight(flight))
     return JsonResponse(res,safe =False)
