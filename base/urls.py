@@ -1,12 +1,5 @@
 from django.urls import path
 from .views import customerView, adminstratorView,countrieView,airline_CompanieView,flightView,ticketsView,profileView
-from .views.customerView import MyTokenObtainPairView
-from .views.adminstratorView import MyTokenObtainPairView
-from .views.countrieView import MyTokenObtainPairView
-from .views.airline_CompanieView import MyTokenObtainPairView
-from .views.flightView import MyTokenObtainPairView
-from .views.ticketsView import MyTokenObtainPairView
-
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -25,6 +18,7 @@ urlpatterns = [
     # countrie urls:
     path('countrie', countrieView.getCountrie),
     path('countrie/<id>', countrieView.getCountrie),
+    path('deletecountrie/<id>', countrieView.deleteCountrie),
     path('addcountrie', countrieView.addCountrie),
     # airline_Companie urls:
     path('airline_Companie', airline_CompanieView.getAirline_Companie),
@@ -34,6 +28,7 @@ urlpatterns = [
     path('flight', flightView.getFlight),
     path('flight/<id>', flightView.getFlight),
     path('addflight', flightView.addFlight),
+    path('airlineflights', flightView.getFlightForAirline),
     path('deleteflight/<id>', flightView.deleteFlight),
     path('selectflight/<origin_countrie>/<destination_countrie>/<departure_time>/<landing_time>', flightView.get_filght_by_filters),
     # Tickets urls:
@@ -41,6 +36,7 @@ urlpatterns = [
     path('usertickets', ticketsView.getTicketsForUSER),
     path('tickets/<id>', ticketsView.getTickets),
     path('addtickets', ticketsView.addTickets),
+    path('deletetickets', ticketsView.deleteTickets),
     # get token urls:
     # login url:
     path('token/', customerView.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

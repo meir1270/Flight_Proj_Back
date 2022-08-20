@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
         print(obj)
         if obj == None: return {}
         return {
+            "id": obj.id,
             "username":obj.username,
             "email":   obj.email
             }

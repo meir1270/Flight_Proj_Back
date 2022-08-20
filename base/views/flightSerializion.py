@@ -41,5 +41,24 @@ class FlightSerializer(ModelSerializer):
             "status": flight.status,
             }
 
+    def get_Flights_For_Airline(self,obj):
+        return {
+            "id": obj._id,
+            "airline_Companie":  Airline_CompanieSerializer().get_Airline_Companie(obj.airline_Companie),
+            "origin_countrie":  CountrieSerializer().get_Countrie(obj.origin_countrie),
+            "destination_countrie": CountrieSerializer().get_Countrie(obj.destination_countrie),
+            "departure_time": obj.departure_time,
+            "landing_time": obj.landing_time,
+            "remaining_tickets": obj.remaining_tickets,
+            "status": obj.status, 
+            }   
+
+    def get_All_Flights_For_Airline(self,flights):
+        res=[] #create an empty list
+        for flightObj in flights: #run on every row in the table...
+            res.append(self.get_Flights_For_Airline(flightObj)) #append row by to row to res list
+        return res
+
+
 
 

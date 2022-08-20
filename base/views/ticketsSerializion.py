@@ -30,13 +30,21 @@ class TicketsSerializer(ModelSerializer):
             "flight": FlightSerializer().get_Flight(tickets.flight),
             "customer": CustomerSerializer().get_Customer(tickets.customer),
             "number_of_tickets" : tickets.number_of_tickets
- }
+            }  
 
-    def get_Tickets_By_User(self,user):
-        tickets = user.tickets_set.all()
+    def get_Tickets_By_User(self,obj):
+        # tickets = user.tickets_set.all()
         return {
-            "id": tickets._id,
-            "flight":  FlightSerializer().get_Flight(tickets.flight),
-            "customer": CustomerSerializer().get_Customer(tickets.customer),
-            "number_of_tickets" : tickets.number_of_tickets
- }
+            "id": obj._id,
+            "flight":  FlightSerializer().get_Flight(obj.flight),
+            "customer": CustomerSerializer().get_Customer(obj.customer),
+            "number_of_tickets" : obj.number_of_tickets
+            }
+
+
+    def get_All_Tickets_For_User(self,tickets):
+        res=[] #create an empty list
+        for ticketsObj in tickets: #run on every row in the table...
+            res.append(self.get_Tickets_By_User(ticketsObj)) #append row by to row to res list
+        return res
+

@@ -14,8 +14,8 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=50,null=True,blank=True)
     last_name = models.CharField(max_length=50,null=True,blank=True)
     address = models.CharField(max_length=100,null=True,blank=True)
-    phone_No = models.CharField(max_length=100,unique=True,null=True,blank=True)
-    credit_card_No = models.CharField(max_length=100,unique=True,null=True,blank=True)        
+    phone_No = models.CharField(max_length=100,null=True,blank=True)
+    credit_card_No = models.CharField(max_length=100,null=True,blank=True)        
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,blank=True)
     createdTime=models.DateTimeField(auto_now_add=True)
 
@@ -62,6 +62,7 @@ class Flight(models.Model):
     departure_time=models.DateTimeField(auto_now=False, auto_now_add=False)
     landing_time=models.DateTimeField(auto_now=False, auto_now_add=False)
     remaining_tickets = models.IntegerField(MinValueValidator(1),null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,blank=True)
 
     def __str__(self):
         return "origin countrie: " + str(self.origin_countrie) +  " |" + "destination countrie: " + str(self.destination_countrie)  
@@ -72,6 +73,7 @@ class Tickets(models.Model):
     flight= models.ForeignKey(Flight, on_delete=models.CASCADE, null=True,blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE,null=True,blank=True)
     number_of_tickets = models.IntegerField(null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,blank=True)
 
     def __str__(self):
         return  str(self.flight) + "| customer name: " + str(self.customer)  +  " number of tickets:  " + str(self.number_of_tickets)

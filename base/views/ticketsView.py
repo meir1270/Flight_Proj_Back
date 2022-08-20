@@ -26,18 +26,21 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
  
  
-@api_view(['GET','DELETE'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getTickets(request,id=-1):
-    user = request.user
-    if request.method == 'DELETE': #method delete a row
-        temp= Tickets.objects.get(_id = id)
-        temp.delete()
-        return JsonResponse({'DELETE': id})
     if int(id) > -1: #get single product
         return JsonResponse(TicketsSerializer().get_Ticket_By_Id(id),safe=False)
     else: # return all
         return JsonResponse(TicketsSerializer().get_All_Tickets(),safe=False) #return array as json response
+
+ 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteTickets(request,id=-1):
+    temp= Tickets.objects.get(_id = id)
+    temp.delete()
+    return JsonResponse({'DELETE': id})
 
  
 @api_view(['POST'])
@@ -53,12 +56,10 @@ def addTickets(request):
     print(user)
     return JsonResponse({'POST':"success"})
  
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getTicketsForUSER(request):
     user = request.user
     print(user)
     tickets = user.tickets_set.all()
-    serializer = TicketsSerializer(tickets, many=True)
-    return Response(serializer.data)
+    return JsonResponse(TicketsSerializer().get_All_Tickets_For_User(tickets),safe=False) #return array as json response

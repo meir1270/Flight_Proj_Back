@@ -28,13 +28,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
  
  
  
-@api_view(['GET','DELETE'])
-@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def getCountrie(request,id=-1):
-    if request.method == 'DELETE': #method delete a row
-        temp= Countrie.objects.get(_id = id)
-        temp.delete()
-        return JsonResponse({'DELETE': id})
     user = request.user
     print(user,"innnn")
     if int(id) > -1: #get single product
@@ -55,4 +51,11 @@ def addCountrie(request):
     return JsonResponse({'POST':"success"})
  
  
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteCountrie(request,id=-1):
+        temp= Countrie.objects.get(_id = id)
+        temp.delete()
+        return JsonResponse({'DELETE': id})
+
 

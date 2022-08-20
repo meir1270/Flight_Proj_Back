@@ -52,7 +52,8 @@ def addFlight(request):
         destination_countrie=Countrie.objects.get(_id=request.data['destination_countrie_id']),
         departure_time=request.data["departure_time"],
         landing_time=request.data["landing_time"],
-        remaining_tickets=request.data["remaining_tickets"],)
+        remaining_tickets=request.data["remaining_tickets"],
+        user=user)
     print(user)
     return JsonResponse({'POST':"success"})
 
@@ -84,3 +85,11 @@ def get_filght_by_filters(request,origin_countrie=-1,destination_countrie=-1,dep
     for flight in selectedFlight:
         res.append(FlightSerializer().get_Flight(flight))
     return JsonResponse(res,safe =False)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getFlightForAirline(request):
+    user = request.user
+    flights = user.flight_set.all()
+    return JsonResponse(FlightSerializer().get_All_Flights_For_Airline(flights),safe=False) #return array as json response

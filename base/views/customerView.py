@@ -54,7 +54,7 @@ def getCustomer(request,id=-1):
         temp= Customer.objects.get(_id = id)
         temp.delete()
         return JsonResponse({'DELETE': id})
-    if int(id) > -1: #get single product
+    if int(id) > -1: #get single Customer
         return JsonResponse(CustomerSerializer().get_Customer_By_Id(id),safe=False)
     else: # return all
         return JsonResponse(CustomerSerializer().get_All_Customer(),safe=False) #return array as json response
@@ -72,8 +72,7 @@ def addCustomer(request):
         phone_No=request.data["phone_No"],
         credit_card_No=request.data["credit_card_No"],
         user=user)
-    print(user)
-    return JsonResponse({'POST':"success"})
+    return JsonResponse({"post":"succsess"})
  
  
 
