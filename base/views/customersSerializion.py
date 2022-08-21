@@ -15,7 +15,6 @@ class CustomerSerializer(ModelSerializer):
             "last_name": obj.last_name,
             "address": obj.address,
             "phone_No": obj.phone_No,
-            "credit_card_No": obj.credit_card_No,
             "createdTime": obj.createdTime,
             "user": UserSerializer().getUser(obj.user)
             }
@@ -35,7 +34,6 @@ class CustomerSerializer(ModelSerializer):
             "last_name": str(customer.last_name),
             "address": str(customer.address),
             "phone_No": str(customer.phone_No),
-            "credit_card_No": str(customer.credit_card_No),
             "createdTime": customer.createdTime,
             "user": UserSerializer().getUser(customer.user)
             }

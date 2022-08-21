@@ -53,6 +53,7 @@ def addFlight(request):
         departure_time=request.data["departure_time"],
         landing_time=request.data["landing_time"],
         remaining_tickets=request.data["remaining_tickets"],
+        price=request.data["price"],
         user=user)
     print(user)
     return JsonResponse({'POST':"success"})

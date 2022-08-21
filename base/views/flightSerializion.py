@@ -18,6 +18,7 @@ class FlightSerializer(ModelSerializer):
             "landing_time": obj.landing_time,
             "remaining_tickets": obj.remaining_tickets,
             "status": obj.status, 
+            "price": obj.price, 
             }
 
 
@@ -39,6 +40,7 @@ class FlightSerializer(ModelSerializer):
             "landing_time": flight.landing_time,
             "remaining_tickets": flight.remaining_tickets,
             "status": flight.status,
+            "price": flight.price,
             }
 
     def get_Flights_For_Airline(self,obj):
@@ -51,6 +53,7 @@ class FlightSerializer(ModelSerializer):
             "landing_time": obj.landing_time,
             "remaining_tickets": obj.remaining_tickets,
             "status": obj.status, 
+            "price": obj.price, 
             }   
 
     def get_All_Flights_For_Airline(self,flights):

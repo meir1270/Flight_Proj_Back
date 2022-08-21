@@ -70,7 +70,6 @@ def addCustomer(request):
         last_name=request.data["last_name"],
         address=request.data["address"],
         phone_No=request.data["phone_No"],
-        credit_card_No=request.data["credit_card_No"],
         user=user)
     return JsonResponse({"post":"succsess"})
  
