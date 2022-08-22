@@ -71,7 +71,6 @@ class Flight(models.Model):
 class Tickets(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
     flight= models.ForeignKey(Flight, on_delete=models.CASCADE, null=True,blank=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,null=True,blank=True)
     number_of_tickets = models.IntegerField(null=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,blank=True)
 

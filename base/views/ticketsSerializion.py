@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from base.models import Tickets
 from base.views.customersSerializion import CustomerSerializer
 from base.views.flightSerializion import FlightSerializer
+from base.views.userSerializion import UserSerializer
  
 class TicketsSerializer(ModelSerializer):
     class Meta:
@@ -12,8 +13,8 @@ class TicketsSerializer(ModelSerializer):
         return {
             "id": obj._id,
             "flight":  FlightSerializer().get_Flight(obj.flight),
-            "customer": CustomerSerializer().get_Customer(obj.customer),
-            "number_of_tickets" : obj.number_of_tickets
+            "number_of_tickets" : obj.number_of_tickets,
+            "user": UserSerializer().getUser(obj.user)
  }
 
     def get_All_Tickets(self):
@@ -28,8 +29,8 @@ class TicketsSerializer(ModelSerializer):
         return {
             "id": tickets._id,
             "flight": FlightSerializer().get_Flight(tickets.flight),
-            "customer": CustomerSerializer().get_Customer(tickets.customer),
-            "number_of_tickets" : tickets.number_of_tickets
+            "number_of_tickets" : tickets.number_of_tickets,
+            "user": UserSerializer().getUser(tickets.user)
             }  
 
     def get_Tickets_By_User(self,obj):
@@ -37,8 +38,8 @@ class TicketsSerializer(ModelSerializer):
         return {
             "id": obj._id,
             "flight":  FlightSerializer().get_Flight(obj.flight),
-            "customer": CustomerSerializer().get_Customer(obj.customer),
-            "number_of_tickets" : obj.number_of_tickets
+            "number_of_tickets" : obj.number_of_tickets,
+            "user": UserSerializer().getUser(obj.user)
             }
 
 

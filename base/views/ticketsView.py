@@ -49,7 +49,6 @@ def addTickets(request):
     print(request.data)
     user = request.user
     Tickets.objects.create(
-        customer=Customer.objects.get(_id=request.data['customer_id']),
         flight=Flight.objects.get(_id=request.data['flight_id']),
         number_of_tickets=request.data["number_of_tickets"],
         user=user)

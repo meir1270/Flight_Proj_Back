@@ -36,7 +36,7 @@ urlpatterns = [
     path('usertickets', ticketsView.getTicketsForUSER),
     path('tickets/<id>', ticketsView.getTickets),
     path('addtickets', ticketsView.addTickets),
-    path('deletetickets', ticketsView.deleteTickets),
+    path('deletetickets/<id>', ticketsView.deleteTickets),
     # get token urls:
     # login url:
     path('token/', customerView.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
