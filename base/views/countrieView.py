@@ -45,8 +45,7 @@ def addCountrie(request):
     print(request.data)
     user = request.user
     Countrie.objects.create(
-        name=request.data["name"],
-        image=request.data["image"])
+        name=request.data["name"],)
     print(user)
     return JsonResponse({'POST':"success"})
  
